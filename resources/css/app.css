@@ -15,4 +15,8 @@
     .btn {
         @apply px-2 py-1 rounded bg-slate-100;
     }
+
+    .btn-primary {
+        @apply bg-blue-600 text-blue-50;
+    }
 }
