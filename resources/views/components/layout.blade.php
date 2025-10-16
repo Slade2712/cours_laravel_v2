@@ -12,13 +12,13 @@
             <div class="flex items-center justify-between">
                 <h1 class="text-xl font-bold text-gray-800">Cours ESGI - Laravel</h1>
                 <ul class="flex space-x-6">
-                    <a href="/">
+                    <a href="/" class="btn">
                         Accueil
                     </a>
-                    <a href="/about">
+                    <a href="/about" class="btn">
                         À propos
                     </a>
-                    <a href="/contact">
+                    <a href="/contact" class="btn">
                         Contact
                     </a>
                 </ul>
