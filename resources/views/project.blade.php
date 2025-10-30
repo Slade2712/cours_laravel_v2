@@ -1,3 +1,8 @@
 <x-layout>
-    <p>Bienvenue sur la page "Project"</p>
+    <h1>Bienvenue sur la page "Project"</p>
+    <ul class="mt-4 list-disc list-inside">
+        @foreach ($projects as $project)
+            <li><a href=>{{ $project['title'] }}</li>
+        @endforeach
+    </ul>
 </x-layout>
