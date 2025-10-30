@@ -36,15 +36,6 @@ services:
     networks:
       - herd-network
 
-  mailpit:
-    image: axllent/mailpit:latest
-    container_name: herd-mailpit
-    ports:
-      - "1025:1025"
-      - "8025:8025"
-    networks:
-      - herd-network
-
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: herd-phpmyadmin
