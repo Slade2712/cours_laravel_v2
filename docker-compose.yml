@@ -1,40 +1,47 @@
 services:
   php:
-    image: php:8.3-fpm
-    container_name: herd-php
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-php
     volumes:
-      - ./src:/var/www/html
+      - .:/var/www/html
+      - ./storage:/var/www/html/storage
+    environment:
+      - APP_ENV=local
+      - COMPOSER_MEMORY_LIMIT=-1
     networks:
-      - herd-network
+      - laravel-network
 
   web:
     image: nginx:latest
-    container_name: herd-nginx
+    container_name: laravel-nginx
     ports:
       - "8080:80"
     volumes:
-      - ./src:/var/www/html
+      - .:/var/www/html
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./storage/logs/nginx:/var/log/nginx
     depends_on:
       - php
     networks:
-      - herd-network
+      - laravel-network
 
   db:
     image: mysql:8.0
-    container_name: herd-mysql
+    container_name: laravel-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      - herd-network
+      - laravel-network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -48,10 +55,11 @@ services:
     depends_on:
       - db
     networks:
-      - herd-network
+      - laravel-network
 
 networks:
-  herd-network:
+  laravel-network:
 
 volumes:
   db_data:
+  redis_data:
