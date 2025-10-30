@@ -14,16 +14,14 @@ Route::get('/about', function () {
 
 Route::get('/projects', function() {
     
-    $model = new Project();
-    $projects = $model->getAll();
+    $projects = Project::all();
 
     return view('projects.index', compact('projects'));
 })->name('projects.index');
 
 Route::get('/projects/{id}', function($id) {
 
-    $model = new Project();
-    $project  = $model->retrieve($id);
+    $project  = Project::findOrFail ($id);
 
     return view('projects.show', compact('project'));
 })->name('projects.show');

@@ -21,7 +21,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - .:/var/www/html                    # monte le projet Laravel
+      - ./:/var/www/html:delegated
       - ./nginx/conf.d:/etc/nginx/conf.d   # monte la config Nginx
       - ./storage/logs/nginx:/var/log/nginx
     depends_on:

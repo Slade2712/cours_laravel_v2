@@ -1,9 +1,9 @@
 <x-layout>
-    <h1>Bienvenue sur la page "Project"</p>
+    <h1>Bienvenue sur la page "Project"</h1>
     <ul class="mt-4 list-disc list-inside">
-        @foreach ($projects as $key => $project)
+        @foreach ($projects as $project)
             <li>
-                <a href="{{ route('projects.show', $key) }}" class="underline text-blue-800">
+                <a href="{{ route('projects.show', $project->id) }}" class="underline text-blue-800">
                     {{ $project['title'] }}
                 </a>
             </li>
