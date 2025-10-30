@@ -1,0 +1,66 @@
+services:
+  php:
+    image: php:8.3-fpm
+    container_name: herd-php
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - herd-network
+
+  web:
+    image: nginx:latest
+    container_name: herd-nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - php
+    networks:
+      - herd-network
+
+  db:
+    image: mysql:8.0
+    container_name: herd-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - herd-network
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: herd-mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - herd-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: herd-phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - herd-network
+
+networks:
+  herd-network:
+
+volumes:
+  db_data:
